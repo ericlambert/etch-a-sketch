@@ -1,15 +1,21 @@
 const resetBtnId = "reset-btn";
 const gridContainerId = "etch-grid-container";
+const gridSizeBtnId = "gridSize-btn";
 
 populateGrid(16,16,gridContainerId);
-
 initResetButton(resetBtnId,gridContainerId);
-
+initGridSizeButton(gridSizeBtnId,gridContainerId);
 
 // functions
 function populateGrid(width,height,containerId) {
 	const container = document.getElementById(containerId);
 	const divCount = width * height;
+
+	// Make sure we're starting with an empty grid-container
+	clearGridContainer(containerId);
+
+	// set the grids column count
+	document.getElementById(containerId).style.gridTemplateColumns = "repeat(" + width + ", auto)";
 
 	// Make new grid-items and add them to the grid
 	for (var i = 0; i <= divCount - 1; i++) {
@@ -27,6 +33,13 @@ function makeGridItem(id) {
 	//newDiv.addEventListener("mouseout", (e) => removeFromClassName(e.target,"hover"));
 
 	return newDiv;
+}
+
+function clearGridContainer(containerId) {
+	let myElement = document.getElementById(containerId);
+	while (myElement.firstChild) {
+		myElement.removeChild(myElement.firstChild);
+	}
 }
 
 function appendToClassName(element, text) {
@@ -52,10 +65,24 @@ function resetExistingGridItems(containerId) {
 	} while (gridItemsToClear.length > 0);
 }
 
+function changeGridSize(containerId) {
+	let newGridSize = prompt("What size grid would you like?", 16);
+	if (newGridSize > 0) {
+		populateGrid(newGridSize, newGridSize, containerId);
+	}
+}
+
 function initResetButton(elementId, containerId) {
 	let resetBtn = document.getElementById(elementId);
 	let gridContainer = document.getElementById(containerId);
 	resetBtn.addEventListener("click", (e) => {
 		resetExistingGridItems(gridContainer);
+	})
+}
+
+function initGridSizeButton(elementId, containerId) {
+	let gridSizeBtn = document.getElementById(elementId);
+	gridSizeBtn.addEventListener("click", (e) => {
+		changeGridSize(containerId);
 	})
 }
