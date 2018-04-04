@@ -1,8 +1,9 @@
 const resetBtnId = "reset-btn";
 const gridContainerId = "etch-grid-container";
 const gridSizeBtnId = "gridSize-btn";
+const defaultGridSize = 16;
 
-populateGrid(16,16,gridContainerId);
+populateGrid(defaultGridSize,defaultGridSize,gridContainerId);
 initResetButton(resetBtnId,gridContainerId);
 initGridSizeButton(gridSizeBtnId,gridContainerId);
 
@@ -14,7 +15,7 @@ function populateGrid(width,height,containerId) {
 	// Make sure we're starting with an empty grid-container
 	clearGridContainer(containerId);
 
-	// set the grids column count
+	// set the grid's column count
 	document.getElementById(containerId).style.gridTemplateColumns = "repeat(" + width + ", auto)";
 
 	// Make new grid-items and add them to the grid
@@ -66,7 +67,7 @@ function resetExistingGridItems(containerId) {
 }
 
 function changeGridSize(containerId) {
-	let newGridSize = prompt("What size grid would you like?", 16);
+	let newGridSize = prompt("What size grid would you like?", defaultGridSize);
 	if (newGridSize > 0) {
 		populateGrid(newGridSize, newGridSize, containerId);
 	}
