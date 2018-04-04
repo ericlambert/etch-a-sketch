@@ -1,5 +1,11 @@
 makeGrid(16,16,"etch-grid-container");
 
+const gridItems = document.querySelectorAll(".grid-item");
+gridItems.forEach((item) => {
+	item.addEventListener("mouseover", (e) => appendToClassName(e.target,"hover"));
+	//item.addEventListener("mouseout", (e) => removeFromClassName(e.target,"hover"));
+})
+
 function makeGrid(width,height,containerId) {
 	const container = document.getElementById(containerId);
 	const divCount = width * height;
@@ -8,9 +14,23 @@ function makeGrid(width,height,containerId) {
 		var newDiv = document.createElement("div");
 		newDiv.className = "grid-item";
 		newDiv.id = i + 1;
-		var newP = document.createElement("p");
-		newP.innerHTML = newDiv.id;
-		newDiv.appendChild(newP);
 		container.appendChild(newDiv);
 	}
 }
+
+function appendToClassName(element, text) {
+	const origClassName = element.className;
+	const appendedText = " " + text;
+	if (origClassName.includes(text)) { return; }
+	element.className = element.className + appendedText;
+}
+
+function removeFromClassName(element, text) {
+	const origClassName = element.className;
+	const removedText = " " + text;
+	if (origClassName.includes(text)) { 
+		element.className = element.className.replace(removedText,"");
+	}
+
+}
+
